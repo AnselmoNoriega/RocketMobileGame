@@ -35,7 +35,7 @@ public class TochAction : MonoBehaviour
                 scoreManager.points++;
                 break;
             case 1:
-                if (!scoreManager.isClicked && scoreManager.pointsCheck == Mathf.RoundToInt(scoreManager.points))
+                if (!scoreManager.isClicked && scoreManager.timeCheck == Mathf.RoundToInt(scoreManager.time))
                 {
                     scoreManager.clickOnTime = true;
                     scoreManager.isClicked = true;

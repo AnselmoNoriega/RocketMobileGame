@@ -2,10 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
+    [Header("Sliders")]
     [SerializeField]
+    private Slider clickSlider;
+    [SerializeField]
+    private Image sliderClickTime;
+    [SerializeField]
+    private Transform rotationSliderTime;
+
+    [Space, Header("Texts"), SerializeField]
     private TextMeshProUGUI textScore;
     public float score;
 
@@ -15,12 +24,15 @@ public class ScoreManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI textPoints;
+    public int timeCheck;
     public float points;
     public bool isClicked;
     public bool clickOnTime;
-    public int pointsCheck;
 
     public uint scenario;
+
+    private int pointsReduction;
+
 
     [Space, Header("Temp States")]
     public TextMeshProUGUI OnGame;
@@ -30,9 +42,7 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         score = 0;
-
-        scenario = 1;
-        pointsCheck = Random.Range(1, 9);
+        pointsReduction = 1;
     }
 
     private void Update()
@@ -53,7 +63,10 @@ public class ScoreManager : MonoBehaviour
     {
         score += Time.deltaTime;
         time -= 1 * Time.deltaTime;
+        points -= pointsReduction * Time.deltaTime;
         points -= 1 * Time.deltaTime;
+
+        clickSlider.value = time;
     }
 
     private void TextManager()
@@ -61,7 +74,7 @@ public class ScoreManager : MonoBehaviour
         textScore.text = Mathf.RoundToInt(score).ToString();
         textTime.text = Mathf.RoundToInt(time).ToString();
         textPoints.text = Mathf.RoundToInt(points).ToString();
-        textPonitsOnCheck.text = Mathf.RoundToInt(pointsCheck).ToString();
+        textPonitsOnCheck.text = Mathf.RoundToInt(timeCheck).ToString();
     }
 
     private bool CheckScenario()
@@ -69,19 +82,19 @@ public class ScoreManager : MonoBehaviour
         switch (scenario)
         {
             case 0:
-                if(points <= 0)
+                if (points <= 0)
                 {
                     return false;
                 }
                 break;
             case 1:
-                if(!clickOnTime)
+                if (!clickOnTime)
                 {
                     return false;
                 }
                 break;
             case 2:
-                if(isClicked)
+                if (isClicked)
                 {
                     return false;
                 }
@@ -94,13 +107,25 @@ public class ScoreManager : MonoBehaviour
 
     private void RestartScenario()
     {
-        pointsCheck = Random.Range(1, 9);
-        //scenario = (uint)Random.Range(0, 3);
+        timeCheck = Random.Range(1, 9);
+        scenario = (uint)Random.Range(0, 3);
 
         time = 10;
         points = 10;
         isClicked = false;
         clickOnTime = false;
+
+        if (scenario == 0)
+        {
+            pointsReduction += 2;
+            sliderClickTime.fillAmount = 0;
+        }
+        else if (scenario == 1)
+        {
+            sliderClickTime.fillAmount = 0.1f;
+            var mathForRotation = 360 - (360 / 10 * timeCheck);
+            rotationSliderTime.eulerAngles = new Vector3(0, 0, mathForRotation);
+        }
     }
 
 }
