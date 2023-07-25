@@ -11,21 +11,6 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]
     private Image handleImage;
 
-    [Space, Header("Sprites For Slider")]
-    [SerializeField]
-    private Sprite goodZone;
-    [SerializeField]
-    private Sprite badZone;
-    [SerializeField]
-    private Sprite lostGame;
-
-    [Space, Header("Lose Info")]
-    [SerializeField]
-    private GameObject dangerZone;
-    [SerializeField]
-    private GameObject[] asteroids;
-    private float timertoLose;
-
     [Space, Header("Info"), SerializeField]
     private TextMeshProUGUI textScore;
 
@@ -54,6 +39,11 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("-------------------------------");
+    }
+
     private void LextraPoints()
     {
         time -= 1 * Time.deltaTime;
@@ -69,11 +59,11 @@ public class ScoreManager : MonoBehaviour
     {
         if(balanceSlider.value <= 10 || balanceSlider.value >= 75)
         {
-            handleImage.sprite = badZone;
+            
         }
         else
         {
-            handleImage.sprite = goodZone;
+            
         }
     }
 
