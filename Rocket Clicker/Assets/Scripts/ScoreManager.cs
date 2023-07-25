@@ -6,126 +6,66 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    [Header("Sliders")]
-    [SerializeField]
-    private Slider clickSlider;
-    [SerializeField]
-    private Image sliderClickTime;
-    [SerializeField]
-    private Transform rotationSliderTime;
+    public Slider balanceSlider;
 
-    [Space, Header("Texts"), SerializeField]
+    [SerializeField]
     private TextMeshProUGUI textScore;
-    public float score;
 
-    [SerializeField]
-    private TextMeshProUGUI textTime;
-    public float time;
+    public int score;
+    private float time;
 
-    [SerializeField]
-    private TextMeshProUGUI textPoints;
-    public int timeCheck;
-    public float points;
-    public bool isClicked;
-    public bool clickOnTime;
-
-    public uint scenario;
-
-    private int pointsReduction;
-
-
-    [Space, Header("Temp States")]
-    public TextMeshProUGUI OnGame;
-    public TextMeshProUGUI caseScenario;
-    public TextMeshProUGUI textPonitsOnCheck;
+    public float hitStrength;
+    private float sliderReductor;
 
     private void Start()
     {
-        score = 0;
-        pointsReduction = 1;
+        sliderReductor = 10f;
+        hitStrength = 30f;
+        StartLevel();
     }
 
     private void Update()
     {
-        TimeManager();
+        LextraPoints();
         TextManager();
 
-        OnGame.text = CheckScenario().ToString();
-        caseScenario.text = scenario.ToString();
-
-        if (time <= 0)
+        if(time <= 0)
         {
-            RestartScenario();
+            LevelFinished();
         }
     }
 
-    private void TimeManager()
+    private void LextraPoints()
     {
-        score += Time.deltaTime;
         time -= 1 * Time.deltaTime;
-        points -= pointsReduction * Time.deltaTime;
-        points -= 1 * Time.deltaTime;
-
-        clickSlider.value = time;
+        balanceSlider.value -= sliderReductor * Time.deltaTime;
     }
 
     private void TextManager()
     {
         textScore.text = Mathf.RoundToInt(score).ToString();
-        textTime.text = Mathf.RoundToInt(time).ToString();
-        textPoints.text = Mathf.RoundToInt(points).ToString();
-        textPonitsOnCheck.text = Mathf.RoundToInt(timeCheck).ToString();
     }
 
-    private bool CheckScenario()
+    private void StartLevel()
     {
-        switch (scenario)
-        {
-            case 0:
-                if (points <= 0)
-                {
-                    return false;
-                }
-                break;
-            case 1:
-                if (!clickOnTime)
-                {
-                    return false;
-                }
-                break;
-            case 2:
-                if (isClicked)
-                {
-                    return false;
-                }
-                break;
-            default: break;
-        }
-
-        return true;
+        balanceSlider.value = 50;
+        time = 5;
     }
 
-    private void RestartScenario()
+    private void LevelFinished()
     {
-        timeCheck = Random.Range(1, 9);
-        scenario = (uint)Random.Range(0, 3);
+        score += 10;
+        hitStrength /= 1.1f;
+        sliderReductor += 1f;
+        var extraPoints = (int)(5 - ((50 - balanceSlider.value) / 10));
+        if (extraPoints < 0) extraPoints *= (-1);
 
-        time = 10;
-        points = 10;
-        isClicked = false;
-        clickOnTime = false;
-
-        if (scenario == 0)
-        {
-            pointsReduction += 2;
-            sliderClickTime.fillAmount = 0;
-        }
-        else if (scenario == 1)
-        {
-            sliderClickTime.fillAmount = 0.1f;
-            var mathForRotation = 360 - (360 / 10 * timeCheck);
-            rotationSliderTime.eulerAngles = new Vector3(0, 0, mathForRotation);
-        }
+        score += extraPoints;
+        StartLevel();
     }
 
+    private bool CheckIfLost()
+    {
+        return balanceSlider.value <= 10 || balanceSlider.value >= 75;
+    }
 }

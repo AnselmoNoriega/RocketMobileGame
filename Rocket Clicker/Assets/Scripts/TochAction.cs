@@ -29,27 +29,6 @@ public class TochAction : MonoBehaviour
 
     void OnClicked(InputAction.CallbackContext context)
     {
-        switch (scoreManager.scenario)
-        {
-            case 0:
-                scoreManager.points++;
-                break;
-            case 1:
-                if (!scoreManager.isClicked && scoreManager.timeCheck == Mathf.RoundToInt(scoreManager.time))
-                {
-                    scoreManager.clickOnTime = true;
-                    scoreManager.isClicked = true;
-                }
-                else 
-                { 
-                    scoreManager.clickOnTime = false; 
-                    scoreManager.isClicked = true; 
-                }
-                    break;
-            case 2:
-                scoreManager.isClicked = true;
-                break;
-            default: break;
-        }
+        scoreManager.balanceSlider.value += scoreManager.hitStrength;
     }
 }
