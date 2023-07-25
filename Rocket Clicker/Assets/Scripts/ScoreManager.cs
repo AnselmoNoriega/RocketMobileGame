@@ -6,9 +6,20 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
+    [Header("Slider")]
     public Slider balanceSlider;
-
     [SerializeField]
+    private Image handleImage;
+
+    [Space, Header("Sprites For Slider")]
+    [SerializeField]
+    private Sprite goodZone;
+    [SerializeField]
+    private Sprite badZone;
+    [SerializeField]
+    private Sprite lostGame;
+
+    [Space, Header("Info"), SerializeField]
     private TextMeshProUGUI textScore;
 
     public int score;
@@ -28,8 +39,9 @@ public class ScoreManager : MonoBehaviour
     {
         LextraPoints();
         TextManager();
+        HandleManager();
 
-        if(time <= 0)
+        if (time <= 0)
         {
             LevelFinished();
         }
@@ -44,6 +56,18 @@ public class ScoreManager : MonoBehaviour
     private void TextManager()
     {
         textScore.text = Mathf.RoundToInt(score).ToString();
+    }
+
+    private void HandleManager()
+    {
+        if(balanceSlider.value <= 10 || balanceSlider.value >= 75)
+        {
+            handleImage.sprite = badZone;
+        }
+        else
+        {
+            handleImage.sprite = goodZone;
+        }
     }
 
     private void StartLevel()
@@ -61,7 +85,8 @@ public class ScoreManager : MonoBehaviour
         if (extraPoints < 0) extraPoints *= (-1);
 
         score += extraPoints;
-        StartLevel();
+
+        time = 5;
     }
 
     private bool CheckIfLost()
