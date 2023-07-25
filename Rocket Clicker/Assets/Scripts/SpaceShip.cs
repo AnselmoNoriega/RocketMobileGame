@@ -10,14 +10,28 @@ public class SpaceShip : MonoBehaviour
     [Space, Header("Lose Info")]
     [SerializeField]
     private GameObject dangerZone;
-    [SerializeField]
-    private GameObject[] asteroids;
     private float timertoLose;
-    public float speed;
+
+    [Space, Header("Asteroids Info")]
+    [SerializeField]
+    private Rigidbody2D[] asteroids;
+    [SerializeField]
+    public Vector3 speed;
+    private float limitPosition;
+
+    private void Start()
+    {
+        for (int i = 0; i < asteroids.Length; i++)
+        {
+            asteroids[i].velocity = speed;
+        }
+
+        limitPosition = -3.3f;
+    }
 
     private void Update()
     {
-        asteroids[0].transform.position += new Vector3(speed, 0, 0) * Time.deltaTime;
+        MovementHandler();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -27,6 +41,12 @@ public class SpaceShip : MonoBehaviour
 
     private void MovementHandler()
     {
-        transform.position = spaceShip.position;
+        for (int i = 0; i < asteroids.Length; i++)
+        {
+            if (asteroids[i].position.x <= limitPosition)
+            {
+                asteroids[i].position = new Vector2(Random.Range(3.3f, 7.0f), Random.Range(-3.4f, 2.1f));
+            }
+        }
     }
 }
