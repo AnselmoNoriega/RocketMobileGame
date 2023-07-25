@@ -19,6 +19,10 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]
     private Sprite lostGame;
 
+    [Space, Header("Lose Info")]
+    [SerializeField]
+    private GameObject dangerZone;
+
     [Space, Header("Info"), SerializeField]
     private TextMeshProUGUI textScore;
 
