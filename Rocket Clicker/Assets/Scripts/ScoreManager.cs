@@ -22,6 +22,9 @@ public class ScoreManager : MonoBehaviour
     [Space, Header("Lose Info")]
     [SerializeField]
     private GameObject dangerZone;
+    [SerializeField]
+    private GameObject[] asteroids;
+    private float timertoLose;
 
     [Space, Header("Info"), SerializeField]
     private TextMeshProUGUI textScore;
