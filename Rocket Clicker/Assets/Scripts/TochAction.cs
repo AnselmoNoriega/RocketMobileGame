@@ -29,6 +29,9 @@ public class TochAction : MonoBehaviour
 
     void OnClicked(InputAction.CallbackContext context)
     {
-        scoreManager.balanceSlider.value += scoreManager.hitStrength;
+        if (Time.timeScale != 0)
+        {
+            scoreManager.balanceSlider.value += scoreManager.hitStrength;
+        }
     }
 }

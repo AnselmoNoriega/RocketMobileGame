@@ -13,6 +13,8 @@ public class ScoreManager : MonoBehaviour
 
     [Space, Header("Info"), SerializeField]
     private TextMeshProUGUI textScore;
+    [SerializeField]
+    private TextMeshProUGUI texthighScores;
 
     public int score;
     private float time;
@@ -20,10 +22,15 @@ public class ScoreManager : MonoBehaviour
     public float hitStrength;
     private float sliderReductor;
 
+    private HighScores highScoreManager;
+    private bool isChecked;
+
     private void Start()
     {
+        highScoreManager = new HighScores();
         sliderReductor = 10f;
         hitStrength = 30f;
+        isChecked = false;
         StartLevel();
     }
 
@@ -31,11 +38,14 @@ public class ScoreManager : MonoBehaviour
     {
         LextraPoints();
         TextManager();
-        HandleManager();
 
         if (time <= 0)
         {
             LevelFinished();
+        }
+        if (Time.timeScale == 0 && !isChecked)
+        {
+            HandleManager();
         }
     }
 
@@ -57,13 +67,13 @@ public class ScoreManager : MonoBehaviour
 
     private void HandleManager()
     {
-        if(balanceSlider.value <= 10 || balanceSlider.value >= 75)
+        for (int i = 0; i < highScoreManager.highScores.Length; i++)
         {
-            
-        }
-        else
-        {
-            
+            if (score > highScoreManager.highScores[i])
+            {
+                highScoreManager.highScores[i] = score;
+                return;
+            }
         }
     }
 
@@ -71,6 +81,7 @@ public class ScoreManager : MonoBehaviour
     {
         balanceSlider.value = 50;
         time = 5;
+        texthighScores.text += highScoreManager.highScores[0].ToString();
     }
 
     private void LevelFinished()
