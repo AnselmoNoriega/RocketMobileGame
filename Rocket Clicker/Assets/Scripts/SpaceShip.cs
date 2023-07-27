@@ -16,9 +16,9 @@ public class SpaceShip : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI myScore;
     [SerializeField]
-    private TextMeshProUGUI HighScore;
-    [SerializeField]
     private GameObject deathPanel;
+    [SerializeField]
+    private HighScores highscores;
 
     [Space, Header("Asteroids Info")]
     [SerializeField]

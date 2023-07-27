@@ -10,3 +10,4 @@ public class ButtonActions : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 }
+

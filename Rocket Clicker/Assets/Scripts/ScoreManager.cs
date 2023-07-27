@@ -15,6 +15,8 @@ public class ScoreManager : MonoBehaviour
     private TextMeshProUGUI textScore;
     [SerializeField]
     private TextMeshProUGUI texthighScores;
+    [SerializeField]
+    private TextMeshProUGUI HighScoretext;
 
     public int score;
     private float time;
@@ -67,14 +69,30 @@ public class ScoreManager : MonoBehaviour
 
     private void HandleManager()
     {
-        for (int i = 0; i < highScoreManager.highScores.Length; i++)
+        for (int i = 0; i < highScoreManager.highScores.Length; ++i)
         {
             if (score > highScoreManager.highScores[i])
             {
-                highScoreManager.highScores[i] = score;
+                ChangeScores(i);
                 highScoreManager.SaveHighScores(highScoreManager.highScores);
-                return;
+                isChecked = true;
+                break;
             }
+        }
+
+        SetScores();
+    }
+
+    private void ChangeScores(int index)
+    {
+        var firstSave = score;
+        int secondSave;
+
+        for (int i = index; i < highScoreManager.highScores.Length; ++i)
+        {
+            secondSave = highScoreManager.highScores[i];
+            highScoreManager.highScores[i] = firstSave;
+            firstSave = secondSave;
         }
     }
 
@@ -101,5 +119,12 @@ public class ScoreManager : MonoBehaviour
     private bool CheckIfLost()
     {
         return balanceSlider.value <= 10 || balanceSlider.value >= 75;
+    }
+    private void SetScores()
+    {
+        for (int i = 0; i < highScoreManager.highScores.Length; i++)
+        {
+            HighScoretext.text += "\n" + (i + 1) + ": " + highScoreManager.highScores[i];
+        }
     }
 }
