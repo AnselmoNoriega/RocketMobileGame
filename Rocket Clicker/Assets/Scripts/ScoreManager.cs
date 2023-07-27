@@ -22,12 +22,12 @@ public class ScoreManager : MonoBehaviour
     public float hitStrength;
     private float sliderReductor;
 
+    [SerializeField]
     private HighScores highScoreManager;
     private bool isChecked;
 
     private void Start()
     {
-        highScoreManager = new HighScores();
         sliderReductor = 10f;
         hitStrength = 30f;
         isChecked = false;
@@ -72,6 +72,7 @@ public class ScoreManager : MonoBehaviour
             if (score > highScoreManager.highScores[i])
             {
                 highScoreManager.highScores[i] = score;
+                highScoreManager.SaveHighScores(highScoreManager.highScores);
                 return;
             }
         }
