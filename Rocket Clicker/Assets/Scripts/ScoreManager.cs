@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour
 
     [SerializeField]
     private HighScores highScoreManager;
-    private bool isChecked;
+    public bool isChecked;
 
     private void Start()
     {
@@ -75,7 +75,6 @@ public class ScoreManager : MonoBehaviour
             {
                 ChangeScores(i);
                 highScoreManager.SaveHighScores(highScoreManager.highScores);
-                isChecked = true;
                 break;
             }
         }
@@ -116,15 +115,18 @@ public class ScoreManager : MonoBehaviour
         time = 5;
     }
 
-    private bool CheckIfLost()
+    public bool CheckIfLost()
     {
         return balanceSlider.value <= 10 || balanceSlider.value >= 75;
     }
+
     private void SetScores()
     {
         for (int i = 0; i < highScoreManager.highScores.Length; i++)
         {
             HighScoretext.text += "\n" + (i + 1) + ": " + highScoreManager.highScores[i];
         }
+
+        isChecked = true;
     }
 }

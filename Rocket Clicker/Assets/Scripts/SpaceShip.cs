@@ -11,6 +11,8 @@ public class SpaceShip : MonoBehaviour
     [SerializeField]
     private GameObject[] hearts;
     private int health;
+    [SerializeField]
+    private Image spaceShipImage;
 
     [Space, Header("Lose Info")]
     [SerializeField]
@@ -19,6 +21,10 @@ public class SpaceShip : MonoBehaviour
     private GameObject deathPanel;
     [SerializeField]
     private HighScores highscores;
+    [SerializeField]
+    private ScoreManager scoreManager;
+    private bool isAboutToDie;
+    private float dangerZoneTimer;
 
     [Space, Header("Asteroids Info")]
     [SerializeField]
@@ -38,12 +44,15 @@ public class SpaceShip : MonoBehaviour
 
         limitPosition = -3.3f;
         health = hearts.Length + 1;
+        dangerZoneTimer = 0;
+        isAboutToDie = false;
     }
 
     private void Update()
     {
         MovementHandler();
         HealthManger();
+        DeathZoneManager();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -69,10 +78,34 @@ public class SpaceShip : MonoBehaviour
             hearts[i].SetActive(health > i);
         }
 
-        if(health <= 0)
+        if (health <= 0)
         {
             Time.timeScale = 0;
             deathPanel.SetActive(true);
+        }
+    }
+
+    private void DeathZoneManager()
+    {
+        if (isAboutToDie)
+        {
+            dangerZoneTimer += Time.deltaTime;
+        }
+
+        if (dangerZoneTimer >= 5)
+        {
+            health = 0;
+        }
+
+        if (scoreManager.CheckIfLost())
+        {
+            isAboutToDie = true;
+            spaceShipImage.color = Color.red;
+        }
+        else
+        {
+            spaceShipImage.color = Color.white;
+            dangerZoneTimer = 0;
         }
     }
 }

@@ -943,9 +943,11 @@ MonoBehaviour:
   - {fileID: 738605995}
   - {fileID: 936974380}
   - {fileID: 785090281}
+  spaceShipImage: {fileID: 1784833377}
   myScore: {fileID: 549541027}
   deathPanel: {fileID: 561564948}
   highscores: {fileID: 2031877911}
+  scoreManager: {fileID: 2031877908}
   asteroids:
   - {fileID: 1521217054}
   - {fileID: 1395454898}
@@ -2665,6 +2667,7 @@ MonoBehaviour:
   score: 0
   hitStrength: 0
   highScoreManager: {fileID: 2031877911}
+  isChecked: 0
 --- !u!114 &2031877909
 MonoBehaviour:
   m_ObjectHideFlags: 0
