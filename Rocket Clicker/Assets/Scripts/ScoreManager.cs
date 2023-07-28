@@ -17,6 +17,7 @@ public class ScoreManager : MonoBehaviour
     private TextMeshProUGUI texthighScores;
     [SerializeField]
     private TextMeshProUGUI HighScoretext;
+    private ExtraPointsController extraPointsController;
 
     public int score;
     private float time;
@@ -30,6 +31,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
+        extraPointsController = GetComponent<ExtraPointsController>();
         sliderReductor = 10f;
         hitStrength = 30f;
         isChecked = false;
@@ -109,7 +111,7 @@ public class ScoreManager : MonoBehaviour
         sliderReductor += 1f;
         var extraPoints = (int)(5 - ((50 - balanceSlider.value) / 10));
         if (extraPoints < 0) extraPoints *= (-1);
-
+        extraPointsController.ExtraPoints(extraPoints);
         score += extraPoints;
 
         time = 5;
