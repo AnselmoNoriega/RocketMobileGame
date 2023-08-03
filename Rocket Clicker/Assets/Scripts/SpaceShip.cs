@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,10 +26,14 @@ public class SpaceShip : MonoBehaviour
     private ScoreManager scoreManager;
     private bool isAboutToDie;
     private float dangerZoneTimer;
+    [SerializeField]
+    private GameObject extraPointsLine;
 
     [Space, Header("Asteroids Info")]
     [SerializeField]
     private Rigidbody2D[] asteroids;
+    [SerializeField]
+    private ParticleSystem[] particles;
     [SerializeField]
     public Vector3 speed;
     private float limitPosition;
@@ -58,6 +63,7 @@ public class SpaceShip : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         health -= 1;
+        ActivateParticles(collision.tag);
     }
 
     private void MovementHandler()
@@ -82,6 +88,7 @@ public class SpaceShip : MonoBehaviour
         {
             Time.timeScale = 0;
             deathPanel.SetActive(true);
+            extraPointsLine.SetActive(false);
         }
     }
 
@@ -106,6 +113,23 @@ public class SpaceShip : MonoBehaviour
         {
             spaceShipImage.color = Color.white;
             dangerZoneTimer = 0;
+        }
+    }
+
+    private void ActivateParticles(string tag)
+    {
+        switch (tag)
+        {
+            case "Asteroid1":
+                particles[0].Play();
+                break;
+            case "Asteroid2":
+                particles[1].Play();
+                break;
+            case "Asteroid3":
+                particles[2].Play();
+                break;
+            default: break;
         }
     }
 }

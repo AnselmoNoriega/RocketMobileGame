@@ -33,7 +33,7 @@ public class ScoreManager : MonoBehaviour
     {
         extraPointsController = GetComponent<ExtraPointsController>();
         sliderReductor = 10f;
-        hitStrength = 30f;
+        hitStrength = 10f;
         isChecked = false;
         StartLevel();
     }
@@ -100,21 +100,19 @@ public class ScoreManager : MonoBehaviour
     private void StartLevel()
     {
         balanceSlider.value = 50;
-        time = 5;
+        time = 3;
         texthighScores.text += highScoreManager.highScores[0].ToString();
     }
 
     private void LevelFinished()
     {
         score += 10;
-        hitStrength /= 1.1f;
-        sliderReductor += 1f;
-        var extraPoints = (int)(5 - ((50 - balanceSlider.value) / 10));
-        if (extraPoints < 0) extraPoints *= (-1);
+        sliderReductor += 5f;
+        var extraPoints = GetExtraPoints();
         extraPointsController.ExtraPoints(extraPoints);
         score += extraPoints;
 
-        time = 5;
+        time = 3;
     }
 
     public bool CheckIfLost()
@@ -130,5 +128,17 @@ public class ScoreManager : MonoBehaviour
         }
 
         isChecked = true;
+    }
+
+    private int GetExtraPoints()
+    {
+        if (balanceSlider.value <= 50)
+        {
+            return (int)(balanceSlider.value / 10);
+        }
+        else
+        {
+            return 5 - (int)((balanceSlider.value - 50) / 10);
+        }
     }
 }
