@@ -5,7 +5,7 @@ using UnityEngine.Advertisements;
 
 public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitializationListener, IUnityAdsLoadListener
 {
-    private string androidID = "5370182";
+    private string _androidID = "5370182";
 
     public void OnInitializationComplete()
     {
