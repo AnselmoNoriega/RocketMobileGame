@@ -11,27 +11,23 @@ public class SpaceShip : MonoBehaviour
     private Transform spaceShip;
     [SerializeField]
     private GameObject[] hearts;
-    private int health;
+    public int health;
     [SerializeField]
     private Image spaceShipImage;
 
     [Space, Header("Lose Info")]
     [SerializeField]
     private TextMeshProUGUI myScore;
-    [SerializeField]
-    private GameObject deathPanel;
-    [SerializeField]
-    private HighScores highscores;
+    public GameObject deathPanel;
     [SerializeField]
     private ScoreManager scoreManager;
     private bool isAboutToDie;
-    private float dangerZoneTimer;
+    public float dangerZoneTimer;
     [SerializeField]
     private GameObject extraPointsLine;
 
     [Space, Header("Asteroids Info")]
-    [SerializeField]
-    private Rigidbody2D[] asteroids;
+    public Rigidbody2D[] asteroids;
     [SerializeField]
     private ParticleSystem[] particles;
     [SerializeField]

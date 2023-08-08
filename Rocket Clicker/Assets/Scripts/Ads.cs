@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.UI;
 
 public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitializationListener, IUnityAdsLoadListener
 {
+    [SerializeField]
+    private SpaceShip charcter;
+    [SerializeField]
+    private Slider pos;
+
     private string _androidID = "5370182";
     private string _banner = "Banner_Android";
     private string _reward = "Rewarded_Android";
@@ -31,7 +37,7 @@ public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitialization
 
     private void ShowIntertitialAD()
     {
-        if(Time.timeScale == 0 && !hasAdBeenShown)
+        if (Time.timeScale == 0 && !hasAdBeenShown)
         {
             Advertisement.Show(_interstitial, this);
             hasAdBeenShown = true;
@@ -40,7 +46,7 @@ public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitialization
 
     private void ContinueBannerAd()
     {
-        if(isBannerOn)
+        if (isBannerOn)
         {
             Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
             Advertisement.Banner.Show(_banner);
@@ -88,16 +94,25 @@ public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitialization
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-        if(placementId == _reward && showCompletionState == UnityAdsShowCompletionState.COMPLETED)
+        if (placementId == _reward && showCompletionState == UnityAdsShowCompletionState.COMPLETED)
         {
-            //reward
+            for (int i = 0; i < charcter.asteroids.Length; i++)
+            {
+                charcter.asteroids[i].position = new Vector2(Random.Range(3.3f, 7.0f), Random.Range(-3.4f, 2.1f));
+            }
+
+            charcter.health = 3;
+            Time.timeScale = 1;
+            charcter.deathPanel.SetActive(false);
+            pos.value = 50;
+            charcter.dangerZoneTimer = 0;
         }
 
-        if(placementId == _reward)
+        if (placementId == _reward)
         {
             Advertisement.Load(_reward, this);
         }
-        else if(placementId == _interstitial)
+        else if (placementId == _interstitial)
         {
             Advertisement.Load(_interstitial, this);
         }
@@ -116,11 +131,11 @@ public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitialization
     private void TimerForBanner()
     {
         bannerTimer -= Time.deltaTime;
-        Debug.Log(bannerTimer);
-        if(bannerTimer <= 0)
+
+        if (bannerTimer <= 0)
         {
             ContinueBannerAd();
-            bannerTimer = 60;
+            bannerTimer = 30;
         }
     }
 }
