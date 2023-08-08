@@ -23,7 +23,7 @@ public class ScoreManager : MonoBehaviour
     private float time;
 
     public float hitStrength;
-    private float sliderReductor;
+    public float sliderReductor;
 
     [SerializeField]
     private HighScores highScoreManager;

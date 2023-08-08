@@ -12103,7 +12103,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charcter: {fileID: 581967800}
+  manager: {fileID: 2031877908}
   pos: {fileID: 201247912}
+  adButton: {fileID: 1455536645}
 --- !u!4 &1490498192
 Transform:
   m_ObjectHideFlags: 0
@@ -17756,6 +17758,7 @@ MonoBehaviour:
   HighScoretext: {fileID: 2039358921}
   score: 0
   hitStrength: 0
+  sliderReductor: 0
   highScoreManager: {fileID: 2031877911}
   isChecked: 0
 --- !u!114 &2031877909

@@ -9,7 +9,11 @@ public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitialization
     [SerializeField]
     private SpaceShip charcter;
     [SerializeField]
+    private ScoreManager manager;
+    [SerializeField]
     private Slider pos;
+    [SerializeField]
+    private GameObject adButton;
 
     private string _androidID = "5370182";
     private string _banner = "Banner_Android";
@@ -20,6 +24,7 @@ public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitialization
     private bool hasAdBeenShown;
 
     private float bannerTimer;
+    private int tries;
 
     private void Awake()
     {
@@ -27,6 +32,7 @@ public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitialization
         isBannerOn = true;
         hasAdBeenShown = false;
         bannerTimer = 0;
+        tries = 2;
     }
 
     private void Update()
@@ -62,6 +68,12 @@ public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitialization
     public void ShowRewardAd()
     {
         Advertisement.Show(_reward, this);
+        tries -= 1;
+
+        if(tries <= 0)
+        {
+            adButton.SetActive(false);
+        }
     }
 
     public void OnInitializationComplete()
@@ -106,6 +118,10 @@ public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitialization
             charcter.deathPanel.SetActive(false);
             pos.value = 50;
             charcter.dangerZoneTimer = 0;
+            if (manager.sliderReductor > 25)
+            {
+                manager.sliderReductor -= 20;
+            }
         }
 
         if (placementId == _reward)
