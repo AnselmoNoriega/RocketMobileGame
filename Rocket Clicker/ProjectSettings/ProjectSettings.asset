@@ -249,7 +249,7 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/lcv2212506/Documents/GitHub/RocketMobileGame/TestBuild/user.keystore
+  AndroidKeystoreName: C:/GitHub/VGP114-GameProject/RocketMobileGame/TestBuild/user.keystore
   AndroidKeyaliasName: anselmo
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
@@ -638,7 +638,7 @@ PlayerSettings:
   scriptingBackend:
     Android: 1
   il2cppCompilerConfiguration:
-    Android: 0
+    Android: 1
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
   suppressCommonWarnings: 1
