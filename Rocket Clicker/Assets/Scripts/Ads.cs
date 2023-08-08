@@ -120,7 +120,7 @@ public class Ads : MonoBehaviour, IUnityAdsShowListener, IUnityAdsInitialization
             charcter.dangerZoneTimer = 0;
             if (manager.sliderReductor > 25)
             {
-                manager.sliderReductor -= 20;
+                manager.sliderReductor /= 2;
             }
         }
 
